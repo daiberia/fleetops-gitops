@@ -26,7 +26,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: fleetops-secrets
-                  key: db-url
+                  key: fleetops-db-url
             - name: SIMULATION_INTERVAL_SECONDS
               value: "{{ .Values.env.simulationIntervalSeconds }}"
             - name: FUEL_CONSUMPTION_RATE
