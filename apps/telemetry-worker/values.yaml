@@ -1,0 +1,21 @@
+image:
+  repository: daiberiafleetopsacr.azurecr.io/telemetry-worker
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 1
+
+env:
+  simulationIntervalSeconds: "15"
+  fuelConsumptionRate: "0.05"
+
+# DATABASE_URL se monta desde el secret fleetops-secrets (mismo que fleet-api)
+# No va en values.yaml — zero secrets en git
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "50m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"

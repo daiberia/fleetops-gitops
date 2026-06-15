@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry-worker
+  namespace: fleetops
+  labels:
+    app: telemetry-worker
+    managed-by: argocd
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: telemetry-worker
+  template:
+    metadata:
+      labels:
+        app: telemetry-worker
+    spec:
+      serviceAccountName: fleet-api-sa  # Misma SA — misma Managed Identity, acceso a KV
+      containers:
+        - name: telemetry-worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: fleetops-secrets
+                  key: db-url
+            - name: SIMULATION_INTERVAL_SECONDS
+              value: "{{ .Values.env.simulationIntervalSeconds }}"
+            - name: FUEL_CONSUMPTION_RATE
+              value: "{{ .Values.env.fuelConsumptionRate }}"
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+          # No expone puertos — worker puro, sin HTTP
+      restartPolicy: Always
