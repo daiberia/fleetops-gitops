@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-api
+  namespace: fleetops
+spec:
+  selector:
+    app: fleet-api
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8000
+  type: {{ .Values.service.type }}

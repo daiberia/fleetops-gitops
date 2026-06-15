@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: daiberiafleetopsacr.azurecr.io/fleet-api
+  pullPolicy: Always
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: nginx
+  host: api.fleetops.daiberia.dev
+  tls: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+keyvault:
+  vaultName: daiberia-fleetops-kv
+  tenantId: ***TENANT_ID***
+  clientId: ""
