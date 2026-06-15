@@ -15,7 +15,9 @@ spec:
     metadata:
       labels:
         app: fleet-api
+        azure.workload.identity/use: "true"   
     spec:
+      serviceAccountName: fleet-api-sa        
       containers:
         - name: fleet-api
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
