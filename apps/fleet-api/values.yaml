@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: daiberiafleetopsacr.azurecr.io/fleet-api
   pullPolicy: Always
-  tag: latest
+  tag: 672cb0fb6deb093ea5dc9e8d2834692f1988f3b0
 
 service:
   type: ClusterIP
