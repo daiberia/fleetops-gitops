@@ -12,6 +12,11 @@ spec:
     targetRevision: 25.21.0
     helm:
       values: |
+        extraScrapeConfigs:
+          - job_name: fleet-api
+            static_configs:
+              - targets: ['fleet-api.fleetops.svc.cluster.local:8000']
+            metrics_path: /metrics
         server:
           retention: 24h
           resources:
@@ -23,12 +28,6 @@ spec:
               cpu: 500m
           persistentVolume:
             enabled: false
-          extraScrapeConfigs: |
-            - job_name: fleet-api
-              static_configs:
-                - targets: ['fleet-api.fleetops.svc.cluster.local:8000']
-              metrics_path: /metrics
-        # Componentes no necesarios para el portfolio
         alertmanager:
           enabled: false
         kube-state-metrics:
