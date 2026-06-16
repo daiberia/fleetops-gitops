@@ -1,0 +1,57 @@
+# cluster/monitoring-values.yaml
+# kube-prometheus-stack — ajustado a Standard_D2as_v4 (2vCPU / 8GB RAM, 1 nodo)
+
+prometheus:
+  prometheusSpec:
+    retention: 24h
+    resources:
+      requests:
+        memory: 400Mi
+        cpu: 100m
+      limits:
+        memory: 600Mi
+        cpu: 500m
+    # Scraping adicional: fleet-api y telemetry-worker
+    additionalScrapeConfigs:
+      - job_name: fleet-api
+        static_configs:
+          - targets: ['fleet-api.fleetops.svc.cluster.local:8000']
+        metrics_path: /metrics
+      - job_name: telemetry-worker
+        static_configs:
+          - targets: ['telemetry-worker.fleetops.svc.cluster.local:8001']
+        metrics_path: /metrics
+
+grafana:
+  adminPassword: "***REMOVED***"
+  resources:
+    requests:
+      memory: 150Mi
+      cpu: 50m
+    limits:
+      memory: 250Mi
+      cpu: 200m
+  # Exponer via ingress después — por ahora port-forward para la demo
+  service:
+    type: ClusterIP
+
+# Reducir footprint — componentes no críticos para el portfolio
+alertmanager:
+  enabled: false
+
+# node-exporter y kube-state-metrics útiles para dashboards de infra
+nodeExporter:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+# Operadores pesados — reducir
+prometheusOperator:
+  resources:
+    requests:
+      memory: 100Mi
+      cpu: 50m
+    limits:
+      memory: 200Mi
+      cpu: 200m

@@ -12,10 +12,15 @@ spec:
     matchLabels:
       app: fleet-api
   template:
+    mtemplate:
     metadata:
       labels:
         app: fleet-api
-        azure.workload.identity/use: "true"   
+        azure.workload.identity/use: "true"
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}   
     spec:
       serviceAccountName: fleet-api-sa        
       containers:

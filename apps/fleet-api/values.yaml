@@ -27,3 +27,8 @@ keyvault:
   vaultName: daiberia-fleetops-kv
   tenantId: ***TENANT_ID***
   clientId: ""
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8000"
+  prometheus.io/path: "/metrics"
