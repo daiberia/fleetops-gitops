@@ -1,6 +1,6 @@
 apiVersion: v2
 name: telemetry-worker
-description: FleetOps telemetry simulation worker
+description: FleetOps Telemetry Worker — Helm chart
 type: application
 version: 0.1.0
-appVersion: "latest"
+appVersion: "0.1.0"
