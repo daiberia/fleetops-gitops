@@ -1,4 +1,4 @@
-# argocd/prometheus-app.yaml
+false# argocd/prometheus-app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -12,7 +12,7 @@ spec:
     targetRevision: 25.21.0
     helm:
       values: |
-        extraScrapeConfigs:
+        extraScrapeConfigs: |
           - job_name: fleet-api
             static_configs:
               - targets: ['fleet-api.fleetops.svc.cluster.local:8000']
