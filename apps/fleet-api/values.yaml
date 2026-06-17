@@ -12,7 +12,7 @@ service:
 ingress:
   enabled: true
   className: nginx
-  host: api.fleetops.daiberia.dev
+  host: fleet-api.51.103.15.240.nip.io
   tls: true
 
 resources:

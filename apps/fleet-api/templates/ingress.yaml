@@ -10,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - fleet-api.20.74.114.10.nip.io
+        - {{ .Values.ingress.host }}
       secretName: fleet-api-tls
   rules:
-    - host: fleet-api.20.74.114.10.nip.io
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
           - path: /
