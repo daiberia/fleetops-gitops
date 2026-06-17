@@ -1,6 +1,6 @@
 image:
   repository: daiberiafleetopsacr.azurecr.io/telemetry-worker
-  tag: latest
+  tag: 6d4819f29581e1e99a417475364a2a31677bb42d
   pullPolicy: Always
 
 replicaCount: 1
