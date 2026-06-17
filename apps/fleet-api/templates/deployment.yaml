@@ -8,11 +8,15 @@ metadata:
     managed-by: argocd
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: fleet-api
   template:
-    mtemplate:
     metadata:
       labels:
         app: fleet-api
@@ -20,9 +24,9 @@ spec:
       annotations:
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}   
+        {{- end }}
     spec:
-      serviceAccountName: fleet-api-sa        
+      serviceAccountName: fleet-api-sa
       containers:
         - name: fleet-api
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
