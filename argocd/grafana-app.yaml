@@ -12,7 +12,19 @@ spec:
     targetRevision: 7.3.9
     helm:
       values: |
-        adminPassword: "***REMOVED***"
+        admin:
+          existingSecret: "grafana-admin-secret"
+          userKey: "admin-user"
+          passwordKey: "admin-password"
+        extraSecretMounts:
+          - name: grafana-secrets-mount
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: "grafana-secrets"
+            mountPath: /mnt/secrets-store
+            readOnly: true
         resources:
           requests:
             memory: 150Mi
@@ -32,6 +44,17 @@ spec:
                 isDefault: true
         persistence:
           enabled: false
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+          hosts:
+            - grafana.51.103.15.240.nip.io
+          tls:
+            - secretName: grafana-tls
+              hosts:
+                - grafana.51.103.15.240.nip.io
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
