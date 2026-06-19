@@ -25,8 +25,8 @@ resources:
 
 keyvault:
   vaultName: daiberia-fleetops-kv
-  tenantId: ***TENANT_ID***
-  clientId: ""
+  tenantId: "8799ccb4-1532-4247-a0a1-7b2e74062950"
+  clientId: "8c3bed2d-26ae-470c-b3c8-2d09816a1eb2"
 
 podAnnotations:
   prometheus.io/scrape: "true"
