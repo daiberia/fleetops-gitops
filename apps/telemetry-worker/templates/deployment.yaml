@@ -27,6 +27,11 @@ spec:
                 secretKeyRef:
                   name: fleetops-secrets
                   key: fleetops-db-url
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: fleetops-secrets
+                  key: fleetops-jwt-secret
             - name: SIMULATION_INTERVAL_SECONDS
               value: "{{ .Values.env.simulationIntervalSeconds }}"
             - name: FUEL_CONSUMPTION_RATE
