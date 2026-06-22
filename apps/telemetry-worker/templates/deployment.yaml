@@ -16,11 +16,20 @@ spec:
       labels:
         app: telemetry-worker
     spec:
-      serviceAccountName: fleet-api-sa  # Misma SA — misma Managed Identity, acceso a KV
+      serviceAccountName: fleet-api-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
       containers:
         - name: telemetry-worker
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -43,5 +52,4 @@ spec:
             limits:
               memory: {{ .Values.resources.limits.memory }}
               cpu: {{ .Values.resources.limits.cpu }}
-          # No expone puertos — worker puro, sin HTTP
       restartPolicy: Always
