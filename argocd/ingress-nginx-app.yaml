@@ -21,6 +21,6 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false   # infraestructura de red: permite patches de emergencia sin revert inmediato
     syncOptions:
       - CreateNamespace=true
