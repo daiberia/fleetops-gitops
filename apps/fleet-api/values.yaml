@@ -32,3 +32,7 @@ podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/port: "8000"
   prometheus.io/path: "/metrics"
+
+# M1: CORS — orígenes permitidos explícitos, sin wildcard
+cors:
+  allowedOrigins: "https://daiberia.xyz,https://fleet-api.51.103.15.240.nip.io"
