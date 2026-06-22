@@ -64,6 +64,8 @@ spec:
                 secretKeyRef:
                   name: fleetops-secrets
                   key: fleetops-jwt-secret
+            - name: CORS_ALLOWED_ORIGINS
+              value: {{ .Values.cors.allowedOrigins | quote }}
           livenessProbe:
             httpGet:
               path: /health
